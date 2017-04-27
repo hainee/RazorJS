@@ -99,9 +99,14 @@ function parse(template) {
 					if (peek === '[' || peek === '(') {
 						remain = rdr.readBlock(peek, peek === '[' ? ']' : ')');
 						if(peek === '(' && (/\s*function[\s*\(]/).test(remain)) {
+							/*
 							bracket = remain.indexOf('{');
 							block += remain.substr(0, bracket);
 							block += parse(remain.substr(bracket), level + 1, 1).join('\r\n\t');
+							*/
+							bracket = remain.indexOf( '{' ) + 1;
+							block += remain.substr( 0, bracket );
+                                			block += parse( remain.substr( bracket, remain.length - bracket - 2 ), level + 1, 1 ).join( '\r\n\t' ) + "})";
 						} else {
 							block += remain;
 						}
